@@ -33,6 +33,10 @@ namespace EnterpriseInventory.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Owner")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Cabinets");
@@ -51,13 +55,6 @@ namespace EnterpriseInventory.DAL.Migrations
 
                     b.Property<int>("CabinetId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Count")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .IsRequired()

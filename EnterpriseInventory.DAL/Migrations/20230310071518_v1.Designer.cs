@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EnterpriseInventory.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230228060102_v1")]
+    [Migration("20230310071518_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -36,6 +36,10 @@ namespace EnterpriseInventory.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Owner")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Cabinets");
@@ -54,13 +58,6 @@ namespace EnterpriseInventory.DAL.Migrations
 
                     b.Property<int>("CabinetId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Count")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .IsRequired()

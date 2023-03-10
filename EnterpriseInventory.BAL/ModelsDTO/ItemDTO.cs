@@ -11,8 +11,6 @@ namespace EnterpriseInventory.BAL.ModelsDTO
         public int Id { get; set; }
         public int Article { get; set; }
         public string Name { get; set; }
-        public string Category { get; set; }
-        public uint Count { get; set; }
         public string CabinetName { get; set; }
     }
 }

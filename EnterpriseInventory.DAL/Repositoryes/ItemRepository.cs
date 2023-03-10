@@ -44,13 +44,6 @@ namespace EnterpriseInventory.DAL.Repositoryes
             return db.Items.Include(i => i.Cabinet).Where(i => i.Cabinet.Name == cabinet);
         }
 
-        public IEnumerable<Item> GetByCategory(string category)
-        {
-            if (category == string.Empty)
-                return null;
-            return db.Items.Include(i => i.Cabinet).Where(i => i.Category == category);
-        }
-
         public Item GetById(int id)
         {
             if (id < 0)

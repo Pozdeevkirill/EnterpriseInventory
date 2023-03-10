@@ -18,8 +18,11 @@ namespace EnterpriseInventory.BAL.Services
             db = _db;
         }
 
-        public async Task AddCabinetAsync(CabinetDTO cabinet)
+        public void AddCabinet(CabinetDTO cabinet)
         {
+            if (cabinet == null)
+                return;
+
             Cabinet cab = new()
             {
                 Name = cabinet.Name,
@@ -27,7 +30,7 @@ namespace EnterpriseInventory.BAL.Services
             };
 
             db.CabinetRepository.Create(cab);
-            await db.SaveAsync();
+            db.SaveAsync();
         }
 
         public async Task DeleteCabinet(int id)
@@ -37,6 +40,23 @@ namespace EnterpriseInventory.BAL.Services
 
             db.CabinetRepository.Delete(id);
             await db.SaveAsync();
+        }
+
+        public IEnumerable<CabinetDTO> GetAllCabinets()
+        {
+            var cabinets = db.CabinetRepository.GetAll();
+            List<CabinetDTO> resultList = new();
+            foreach (var cab in cabinets)
+            {
+                CabinetDTO _cab = new()
+                {
+                    Id = cab.Id,
+                    Name = cab.Name,
+                    Owner = cab.Owner,
+                };
+                resultList.Add(_cab);
+            }
+            return resultList;
         }
 
         public CabinetDTO GetCabinetById(int id)
@@ -61,8 +81,6 @@ namespace EnterpriseInventory.BAL.Services
                     Article = item.Article,
                     CabinetName = _item.Name,
                     Name = item.Name,
-                    Category = item.Category,
-                    Count = item.Count,
                 };
                 list.Add(itemDTO);
             }

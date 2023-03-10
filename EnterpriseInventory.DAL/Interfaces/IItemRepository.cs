@@ -10,6 +10,5 @@ namespace EnterpriseInventory.DAL.Interfaces
     public interface IItemRepository : IRepository<Item>
     {
         public IEnumerable<Item> GetByCabinet(string cabinet);
-        public IEnumerable<Item> GetByCategory(string category);
     }
 }

@@ -25,8 +25,6 @@ namespace EnterpriseInventory.BAL.Services
             Item _item = new()
             {
                 Name = item.Name,
-                Category = item.Category,
-                Count = item.Count,
                 Cabinet = db.CabinetRepository.GetCabinetByName(item.CabinetName),
                 Article = item.Article,
             };
@@ -47,8 +45,6 @@ namespace EnterpriseInventory.BAL.Services
                 Id = item.Id,
                 Article = item.Article,
                 Name = item.Name,
-                Count = item.Count,
-                Category = item.Category,
                 CabinetName = item.Cabinet.Name,
             };
         }
@@ -67,8 +63,6 @@ namespace EnterpriseInventory.BAL.Services
                     Id=item.Id,
                     Name = item.Name,
                     Article = item.Article,
-                    Count = item.Count,
-                    Category=item.Category,
                     CabinetName = item.Cabinet.Name,
                 });
             }
@@ -97,8 +91,6 @@ namespace EnterpriseInventory.BAL.Services
                 Name = item.Name,
                 Article = item.Article,
                 Cabinet = db.CabinetRepository.GetCabinetByName(item.CabinetName),
-                Count = item.Count,
-                Category = item.Category,
             };
 
             db.ItemRepository.Update(_item);

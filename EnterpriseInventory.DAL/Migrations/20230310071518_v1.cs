@@ -16,7 +16,8 @@ namespace EnterpriseInventory.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Owner = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,8 +32,6 @@ namespace EnterpriseInventory.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Article = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Count = table.Column<long>(type: "bigint", nullable: false),
                     CabinetId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

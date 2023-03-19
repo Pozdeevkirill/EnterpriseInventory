@@ -40,9 +40,9 @@ namespace EnterpriseInventory.DAL.Repositoryes
             }
         }
 
-        public async Task SaveAsync()
+        public void SaveAsync()
         {
-            await db.SaveChangesAsync();
+            db.SaveChanges();
         }
 
         public void Dispose()

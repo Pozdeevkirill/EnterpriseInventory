@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EnterpriseInventory.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230310071518_v1")]
+    [Migration("20230311082542_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -33,16 +33,22 @@ namespace EnterpriseInventory.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Owner")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Cabinets");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Склад",
+                            Owner = "-"
+                        });
                 });
 
             modelBuilder.Entity("EnterpriseInventory.DAL.Models.Item", b =>

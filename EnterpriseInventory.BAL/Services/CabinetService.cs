@@ -38,8 +38,10 @@ namespace EnterpriseInventory.BAL.Services
             if (id < 0)
                 return;
 
+
+
             db.CabinetRepository.Delete(id);
-            await db.SaveAsync();
+            db.SaveAsync();
         }
 
         public IEnumerable<CabinetDTO> GetAllCabinets()
@@ -54,6 +56,20 @@ namespace EnterpriseInventory.BAL.Services
                     Name = cab.Name,
                     Owner = cab.Owner,
                 };
+
+                _cab.Items = new();
+                foreach(var item in cab.Items)
+                {
+                    ItemDTO _item = new()
+                    {
+                        Name = item.Name,
+                        Article = item.Article,
+                        CabinetName = item.Cabinet.Name,
+                        Id = item.Id
+                    };
+                    _cab.Items.Add(_item);  
+                }
+
                 resultList.Add(_cab);
             }
             return resultList;
@@ -65,7 +81,11 @@ namespace EnterpriseInventory.BAL.Services
                 return null;
 
             var cab = db.CabinetRepository.GetById(id);
-            CabinetDTO _item = new()
+
+            if (cab == null)
+                return null;
+
+            CabinetDTO _cab = new()
             {
                 Id = cab.Id,
                 Name = cab.Name,
@@ -79,29 +99,99 @@ namespace EnterpriseInventory.BAL.Services
                 {
                     Id=item.Id,
                     Article = item.Article,
-                    CabinetName = _item.Name,
+                    CabinetName = _cab.Name,
                     Name = item.Name,
                 };
                 list.Add(itemDTO);
             }
-            _item.Items = list;
+            _cab.Items = list;
 
-            return _item;
+            return _cab;
         }
 
         public CabinetDTO GetCabinetByItem(ItemDTO item)
         {
-            throw new NotImplementedException();
+            if (item == null) return null;
+
+            var cab = db.CabinetRepository.GetCabinetByName(item.CabinetName);
+
+            CabinetDTO _cab = new()
+            {
+                Id = cab.Id,
+                Name = cab.Name,
+                Owner = cab.Owner
+            };
+            List<ItemDTO> list = new();
+
+            foreach (var _item in cab.Items)
+            {
+                var itemDTO = new ItemDTO()
+                {
+                    Id = _item.Id,
+                    Article = _item.Article,
+                    CabinetName = _cab.Name,
+                    Name = _item.Name,
+                };
+                list.Add(itemDTO);
+            }
+            _cab.Items = list;
+
+            return _cab;
+
         }
 
-        public CabinetDTO GetCabinetByOwner(string owner)
+        public IEnumerable<CabinetDTO> GetCabinetByOwner(string owner)
         {
-            throw new NotImplementedException();
+            if (owner == string.Empty) return null;
+
+            var cabinets = db.CabinetRepository.GetCabinetByOwner(owner).ToList();
+
+            List<CabinetDTO> resultList = new();
+            foreach (var cab in cabinets)
+            {
+                CabinetDTO _cab = new()
+                {
+                    Id = cab.Id,
+                    Name = cab.Name,
+                    Owner = cab.Owner,
+                };
+
+                _cab.Items = new();
+                foreach (var item in cab.Items)
+                {
+                    ItemDTO _item = new()
+                    {
+                        Name = item.Name,
+                        Article = item.Article,
+                        CabinetName = item.Cabinet.Name,
+                        Id = item.Id
+                    };
+                    _cab.Items.Add(_item);
+                }
+
+                resultList.Add(_cab);
+            }
+
+            return resultList;
         }
 
-        public Task UpdateCavinet(CabinetDTO cabinet)
+        public async Task UpdateCabinet(CabinetDTO cabinet)
         {
-            throw new NotImplementedException();
+            if (cabinet == null)
+                return;
+
+            Cabinet cab = new()
+            {
+                Id = cabinet.Id,
+                Name = cabinet.Name,
+                Owner = cabinet.Owner,
+            };
+
+            var _cab = db.CabinetRepository.GetById(cab.Id);
+            cab.Items = _cab.Items;
+
+            db.CabinetRepository.Update(cab);
+            db.SaveAsync();
         }
     }
 }

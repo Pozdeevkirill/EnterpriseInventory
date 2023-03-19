@@ -29,7 +29,16 @@ namespace EnterpriseInventory.DAL.Repositoryes
         {
             if (id < 0)
                 return;
-            db.Cabinets.Remove(db.Cabinets.FirstOrDefault(c => c.Id == id));
+            var cabinet = db.Cabinets.Include(c=> c.Items).FirstOrDefault(c => c.Id == id);
+            var storage = db.Cabinets.FirstOrDefault(c => c.Id == 1);
+
+
+            foreach (var item in cabinet.Items)
+            {
+                item.Cabinet = storage;
+            }
+
+            db.Cabinets.Remove(cabinet);
         }
 
         public IEnumerable<Cabinet> GetAll()
@@ -53,21 +62,27 @@ namespace EnterpriseInventory.DAL.Repositoryes
                 .FirstOrDefault(c => c.Name == name);
         }
 
-        public Cabinet GetCabinetByOwner(string owner)
+        public IEnumerable<Cabinet> GetCabinetByOwner(string owner)
         {
             if (owner == string.Empty)
                 return null;
 
             return db.Cabinets
                 .Include(c => c.Items)
-                .FirstOrDefault(c => c.Owner == owner);
+                .Where(c => EF.Functions.Like(c.Owner,$"%{owner}%"));
         }
 
         public void Update(Cabinet model)
         {
             if (model == null)
                 return;
-            db.Cabinets.Update(model);    
+
+            var cabinet = GetById(model.Id);
+
+            cabinet.Name = model.Name;
+            cabinet.Owner = model.Owner;
+
+            db.Cabinets.Update(cabinet);    
         }
     }
 }

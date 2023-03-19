@@ -14,5 +14,6 @@ namespace EnterpriseInventory.BAL.Interfaces
         public Task UpdateItem(ItemDTO item);
         public ItemDTO GetItemById(int id);
         public List<ItemDTO> GetItemByName(string name);
+        public List<ItemDTO> GetAll();
     }
 }

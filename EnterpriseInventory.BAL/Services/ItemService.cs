@@ -29,7 +29,27 @@ namespace EnterpriseInventory.BAL.Services
                 Article = item.Article,
             };
             db.ItemRepository.Create(_item);
-            await db.SaveAsync();
+            db.SaveAsync();
+        }
+
+        public List<ItemDTO> GetAll()
+        {
+            var temp = db.ItemRepository.GetAll();
+            List<ItemDTO> resultList = new();
+
+            foreach (var item in temp)
+            {
+                ItemDTO _item = new()
+                {
+                    Id = item.Id,
+                    Article = item.Article,
+                    Name = item.Name,
+                    CabinetName = item.Cabinet.Name
+                };
+                resultList.Add(_item);
+            }
+
+            return resultList;
         }
 
         public ItemDTO GetItemById(int id)
@@ -77,7 +97,7 @@ namespace EnterpriseInventory.BAL.Services
                 return;
 
             db.ItemRepository.Delete(id);
-            await db.SaveAsync();
+             db.SaveAsync();
         }
 
         public async Task UpdateItem(ItemDTO item)
@@ -94,7 +114,7 @@ namespace EnterpriseInventory.BAL.Services
             };
 
             db.ItemRepository.Update(_item);
-            await db.SaveAsync();
+            db.SaveAsync();
         }
     }
 }

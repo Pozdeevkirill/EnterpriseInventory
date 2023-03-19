@@ -10,6 +10,6 @@ namespace EnterpriseInventory.DAL.Interfaces
     public interface ICabinetRepository : IRepository<Cabinet>
     {
         public Cabinet GetCabinetByName(string name);
-        public Cabinet GetCabinetByOwner(string owner);
+        public IEnumerable<Cabinet> GetCabinetByOwner(string owner);
     }
 }

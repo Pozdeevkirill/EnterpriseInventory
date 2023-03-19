@@ -10,6 +10,6 @@ namespace EnterpriseInventory.DAL.Interfaces
     {
         IItemRepository ItemRepository { get; }
         ICabinetRepository CabinetRepository { get; }
-        Task SaveAsync();
+        void SaveAsync();
     }
 }

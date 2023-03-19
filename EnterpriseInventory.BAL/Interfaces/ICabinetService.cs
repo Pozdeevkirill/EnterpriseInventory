@@ -11,10 +11,10 @@ namespace EnterpriseInventory.BAL.Interfaces
     {
         public void AddCabinet(CabinetDTO cabinet);
         public CabinetDTO GetCabinetById(int id);
-        public CabinetDTO GetCabinetByOwner(string owner);
+        public IEnumerable<CabinetDTO> GetCabinetByOwner(string owner);
         public CabinetDTO GetCabinetByItem(ItemDTO item);
         public IEnumerable<CabinetDTO> GetAllCabinets();
-        public Task UpdateCavinet(CabinetDTO cabinet);
+        public Task UpdateCabinet(CabinetDTO cabinet);
         public Task DeleteCabinet(int id);
     }
 }

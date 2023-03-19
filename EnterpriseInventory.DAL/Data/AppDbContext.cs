@@ -18,6 +18,9 @@ namespace EnterpriseInventory.DAL.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            Cabinet cabinet = new Cabinet() { Id = 1, Name = "Склад", Owner = "-", };
+            modelBuilder.Entity<Cabinet>().HasData(new Cabinet[] {cabinet});
+                
             base.OnModelCreating(modelBuilder);
         }
     }

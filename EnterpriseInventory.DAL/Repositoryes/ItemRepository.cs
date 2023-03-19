@@ -22,6 +22,10 @@ namespace EnterpriseInventory.DAL.Repositoryes
         {
             if (model == null)
                 return;
+
+            if (model.Cabinet == null)
+                model.Cabinet = db.Cabinets.FirstOrDefault(c => c.Id == 1);
+
             db.Items.Add(model);    
         }
 
@@ -55,7 +59,16 @@ namespace EnterpriseInventory.DAL.Repositoryes
         {
             if (model == null)
                 return;
-            db.Items.Update(model);
+
+            if (model.Cabinet == null)
+                model.Cabinet = db.Cabinets.FirstOrDefault(c => c.Id == 1);
+
+            var item = GetById(model.Id);
+            item.Cabinet = model.Cabinet;
+            item.Article = model.Article;
+            item.Name = model.Name;
+
+            db.Items.Update(item);
         }
     }
 }

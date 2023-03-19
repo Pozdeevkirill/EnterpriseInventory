@@ -30,16 +30,22 @@ namespace EnterpriseInventory.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Owner")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Cabinets");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Склад",
+                            Owner = "-"
+                        });
                 });
 
             modelBuilder.Entity("EnterpriseInventory.DAL.Models.Item", b =>
